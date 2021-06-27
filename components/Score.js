@@ -1,16 +1,21 @@
 export default class Score {
-  constructor($app) {
-    this.state = { left: 0, right: 0 };
+  constructor($app, initialState) {
+    this.state = initialState;
     this.$scoreContainer = document.createElement("div");
     this.$scoreContainer.className = "scoreContainer";
     this.$score = document.createElement("span");
     this.$score.className = "score";
-    this.$score.innerHTML = "0 : 0";
+    this.$score.innerHTML = `${this.state.left__score} : ${this.state.right__score}`;
     this.$scoreContainer.appendChild(this.$score);
     $app.appendChild(this.$scoreContainer);
   }
 
-  setState() {}
+  setState(nextState) {
+    this.state = nextState;
+    this.render();
+  }
 
-  render() {}
+  render() {
+    this.$score.innerHTML = `${this.state.left__score} : ${this.state.right__score}`;
+  }
 }

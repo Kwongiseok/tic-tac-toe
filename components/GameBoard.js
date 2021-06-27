@@ -1,6 +1,8 @@
 export default class GameBoard {
-  constructor($app, initialTurn) {
+  constructor($app, initialTurn, updateTurn, updateWinner) {
     this.state = { turn: initialTurn, lines: [], squares: [] }; // turn
+    this.updateTurn = updateTurn;
+    this.updateWinner = updateWinner;
     this.$gameBoardContainer = document.createElement("div");
     this.$gameBoardContainer.className = "gameBoardContainer";
 
@@ -37,8 +39,10 @@ export default class GameBoard {
     e.target.innerHTML = this.state.turn;
     const res = await this.checkWinner(e.target);
     if (res) {
+      this.updateWinner(this.state.turn);
     } else {
-      this.updateTurn();
+      const turn = this.state.turn === "O" ? "X" : "O";
+      this.updateTurn(turn);
     }
   }
 
@@ -48,12 +52,6 @@ export default class GameBoard {
         square.innerHTML = "";
       });
     });
-    const turn = "O";
-  }
-
-  updateTurn() {
-    const turn = this.state.turn === "O" ? "X" : "O";
-    this.state = { ...this.state, turn };
   }
 
   checkWinner(target) {
@@ -105,5 +103,9 @@ export default class GameBoard {
     } else {
       return false;
     }
+  }
+
+  setState(nextState) {
+    this.state = nextState;
   }
 }
