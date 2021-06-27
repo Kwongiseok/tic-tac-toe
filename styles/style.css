@@ -46,14 +46,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 60%;
+  width: 500px;
+  height: 500px;
+  margin: auto;
 }
 .gameBoard {
   border-collapse: collapse;
   padding: 36px;
-  width: 500px;
-  height: 500px;
+  width: 100%;
+  height: 100%;
 }
 
 .gameBoard__tr:not(:last-child) {
