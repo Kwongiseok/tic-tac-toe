@@ -19,7 +19,10 @@ export default class App {
 
     this.$currentTurn = new CurrentTurn(this.$app, this.state.turn);
 
-    this.$score = new Score(this.$app, { left__score: this.state.left__score, right__score: this.state.right__score });
+    this.$score = new Score(this.$app, {
+      left__score: this.state.left__score,
+      right__score: this.state.right__score,
+    });
 
     this.$gameBoard = new GameBoard(
       this.$app,
@@ -30,10 +33,16 @@ export default class App {
       (winner) => {
         if (winner === "O") {
           alert("승자는 O 입니다. :)");
-          this.setState({ ...this.state, left__score: this.state.left__score + 1 });
+          this.setState({
+            ...this.state,
+            left__score: this.state.left__score + 1,
+          });
         } else {
           alert("승자는 X 입니다. :)");
-          this.setState({ ...this.state, right__score: this.state.right__score + 1 });
+          this.setState({
+            ...this.state,
+            right__score: this.state.right__score + 1,
+          });
         }
         this.$gameBoard.resetBoard();
       }
@@ -55,8 +64,14 @@ export default class App {
   setState(nextState) {
     this.state = nextState;
     this.$currentTurn.setState({ turn: this.state.turn });
-    this.$gameBoard.setState({ ...this.$gameBoard.state, turn: this.state.turn });
-    this.$score.setState({ left__score: this.state.left__score, right__score: this.state.right__score });
+    this.$gameBoard.setState({
+      ...this.$gameBoard.state,
+      turn: this.state.turn,
+    });
+    this.$score.setState({
+      left__score: this.state.left__score,
+      right__score: this.state.right__score,
+    });
   }
 
   render() {}
