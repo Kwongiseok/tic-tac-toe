@@ -1,3 +1,4 @@
+import CurrentTurn from "./components/CurrentTurn.js";
 import FooterButtons from "./components/footerButtons.js";
 import GameBoard from "./components/GameBoard.js";
 import Score from "./components/Score.js";
@@ -15,6 +16,8 @@ export default class App {
     $main.appendChild(this.$app);
 
     this.$title = new Title(this.$app);
+
+    this.$currentTurn = new CurrentTurn(this.$app, this.state.turn);
 
     this.$score = new Score(this.$app, { left__score: this.state.left__score, right__score: this.state.right__score });
 
@@ -51,6 +54,7 @@ export default class App {
 
   setState(nextState) {
     this.state = nextState;
+    this.$currentTurn.setState({ turn: this.state.turn });
     this.$gameBoard.setState({ ...this.$gameBoard.state, turn: this.state.turn });
     this.$score.setState({ left__score: this.state.left__score, right__score: this.state.right__score });
   }

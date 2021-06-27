@@ -39,10 +39,23 @@ export default class GameBoard {
     e.target.innerHTML = this.state.turn;
     const res = await this.checkWinner(e.target);
     if (res) {
-      this.updateWinner(this.state.turn);
+      if (res !== "무승부") {
+        this.updateWinner(this.state.turn);
+      } else {
+        // 무승부
+        alert("무승부 입니다!");
+        this.resetBoard();
+      }
     } else {
       const turn = this.state.turn === "O" ? "X" : "O";
       this.updateTurn(turn);
+    }
+  }
+
+  makeStoneHTML() {
+    if (this.state.turn === "O") {
+      return ``;
+    } else {
     }
   }
 
@@ -71,7 +84,7 @@ export default class GameBoard {
       this.state.squares[lineIndex][1].innerHTML === this.state.turn &&
       this.state.squares[lineIndex][2].innerHTML === this.state.turn
     ) {
-      full = true;
+      return true;
     }
     // 2차 세로줄 판단로직
     if (
@@ -79,7 +92,7 @@ export default class GameBoard {
       this.state.squares[1][squareIndex].innerHTML === this.state.turn &&
       this.state.squares[2][squareIndex].innerHTML === this.state.turn
     ) {
-      full = true;
+      return true;
     }
 
     // 3차 대각선 판단 로직
@@ -94,15 +107,18 @@ export default class GameBoard {
           this.state.squares[1][1].innerHTML === this.state.turn &&
           this.state.squares[2][0].innerHTML === this.state.turn)
       ) {
-        full = true;
+        return true;
       }
     }
 
-    if (full) {
-      return true;
-    } else {
-      return false;
+    for (let i = 0; i < this.state.squares.length; i++) {
+      for (let j = 0; j < this.state.squares[i].length; j++) {
+        if (!this.state.squares[i][j].innerHTML) {
+          return false;
+        }
+      }
     }
+    return "무승부";
   }
 
   setState(nextState) {
