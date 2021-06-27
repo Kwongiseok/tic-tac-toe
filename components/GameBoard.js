@@ -36,34 +36,33 @@ export default class GameBoard {
       alert("이미 클릭된 부분입니다.!");
       return;
     }
-    e.target.innerHTML = this.makeStoneHTML();
-    const res = await this.checkWinner(e.target);
-    if (res) {
-      if (res !== "무승부") {
-        this.updateWinner(this.state.turn);
-      } else {
-        // 무승부
-        alert("무승부 입니다!");
-        this.resetBoard();
-      }
-    } else {
-      const turn = this.state.turn === "O" ? "X" : "O";
-      this.updateTurn(turn);
-    }
-  }
-
-  makeStoneHTML() {
+    e.target.innerHTML = this.state.turn;
     if (this.state.turn === "O") {
-      return `<div class="O"></div>`;
-    } else {
-      return `<div class="X">X</div>`;
+      e.target.classList.add("color__aqua");
     }
+
+    setTimeout(async () => {
+      const res = await this.checkWinner(e.target);
+      if (res) {
+        if (res !== "무승부") {
+          this.updateWinner(this.state.turn);
+        } else {
+          // 무승부
+          alert("무승부 입니다!");
+          this.resetBoard();
+        }
+      } else {
+        const turn = this.state.turn === "O" ? "X" : "O";
+        this.updateTurn(turn);
+      }
+    }, 10);
   }
 
   resetBoard() {
     this.state.squares.forEach((lines) => {
       lines.forEach((square) => {
         square.innerHTML = "";
+        square.classList.remove("color__aqua");
       });
     });
   }
@@ -78,20 +77,19 @@ export default class GameBoard {
     const squareIndex = line.indexOf(target);
 
     // 클릭 이벤트가 끝났을떄 승리, 패배 로직을 판단해야하다
-    let full = false;
     //1차 가로줄 판단로직
     if (
-      this.state.squares[lineIndex][0].innerHTML.className === this.state.turn &&
-      this.state.squares[lineIndex][1].innerHTML.className === this.state.turn &&
-      this.state.squares[lineIndex][2].innerHTML.className === this.state.turn
+      this.state.squares[lineIndex][0].innerHTML === this.state.turn &&
+      this.state.squares[lineIndex][1].innerHTML === this.state.turn &&
+      this.state.squares[lineIndex][2].innerHTML === this.state.turn
     ) {
       return true;
     }
     // 2차 세로줄 판단로직
     if (
-      this.state.squares[0][squareIndex].innerHTML.className === this.state.turn &&
-      this.state.squares[1][squareIndex].innerHTML.className === this.state.turn &&
-      this.state.squares[2][squareIndex].innerHTML.className === this.state.turn
+      this.state.squares[0][squareIndex].innerHTML === this.state.turn &&
+      this.state.squares[1][squareIndex].innerHTML === this.state.turn &&
+      this.state.squares[2][squareIndex].innerHTML === this.state.turn
     ) {
       return true;
     }
@@ -99,14 +97,17 @@ export default class GameBoard {
     // 3차 대각선 판단 로직
     //대각선은 [0,0], [1, 1], [2, 2]  [0, 2], [1, 1], [2,0] 두가지일때
     // x, y값을 뺐을떄 0이 되거나 x, y를 뺏을떄 절대값 2가 되어야한다
-    if (lineIndex - squareIndex === 0 || Math.abs(lineIndex - squareIndex) === 2) {
+    if (
+      lineIndex - squareIndex === 0 ||
+      Math.abs(lineIndex - squareIndex) === 2
+    ) {
       if (
-        (this.state.squares[0][0].innerHTML.className === this.state.turn &&
-          this.state.squares[1][1].innerHTML.className === this.state.turn &&
-          this.state.squares[2][2].innerHTML.className === this.state.turn) ||
-        (this.state.squares[0][2].innerHTML.className === this.state.turn &&
-          this.state.squares[1][1].innerHTML.className === this.state.turn &&
-          this.state.squares[2][0].innerHTML.className === this.state.turn)
+        (this.state.squares[0][0].innerHTML === this.state.turn &&
+          this.state.squares[1][1].innerHTML === this.state.turn &&
+          this.state.squares[2][2].innerHTML === this.state.turn) ||
+        (this.state.squares[0][2].innerHTML === this.state.turn &&
+          this.state.squares[1][1].innerHTML === this.state.turn &&
+          this.state.squares[2][0].innerHTML === this.state.turn)
       ) {
         return true;
       }
@@ -114,7 +115,7 @@ export default class GameBoard {
 
     for (let i = 0; i < this.state.squares.length; i++) {
       for (let j = 0; j < this.state.squares[i].length; j++) {
-        if (!this.state.squares[i][j].innerHTML.className) {
+        if (!this.state.squares[i][j].innerHTML) {
           return false;
         }
       }

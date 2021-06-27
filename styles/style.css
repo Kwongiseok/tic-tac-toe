@@ -63,8 +63,9 @@ body {
 
 .gameBoard__td {
   width: 33.33%;
-  position: relative;
   text-align: center;
+  font-size: 76px;
+  color: white;
 }
 .gameBoard__td:not(:last-child) {
   border-right: 3px solid wheat;
@@ -93,20 +94,6 @@ body {
   color: antiquewhite;
 }
 
-.O {
-  width: 50%;
-  height: 50%;
-  border-radius: 50%;
-  border: 4px solid aquamarine;
-  margin: auto;
-}
-
-.X {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  color: white;
-  font-size: 120px;
+.color__aqua {
+  color: aquamarine;
 }
