@@ -57,6 +57,7 @@ body {
 }
 
 .gameBoard__tr:not(:last-child) {
+  height: 33.33%;
   border-bottom: 3px solid wheat;
 }
 
@@ -90,4 +91,22 @@ body {
 }
 .button:hover {
   color: antiquewhite;
+}
+
+.O {
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  border: 4px solid aquamarine;
+  margin: auto;
+}
+
+.X {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  color: white;
+  font-size: 120px;
 }

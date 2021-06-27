@@ -36,7 +36,7 @@ export default class GameBoard {
       alert("이미 클릭된 부분입니다.!");
       return;
     }
-    e.target.innerHTML = this.state.turn;
+    e.target.innerHTML = this.makeStoneHTML();
     const res = await this.checkWinner(e.target);
     if (res) {
       if (res !== "무승부") {
@@ -54,8 +54,9 @@ export default class GameBoard {
 
   makeStoneHTML() {
     if (this.state.turn === "O") {
-      return ``;
+      return `<div class="O"></div>`;
     } else {
+      return `<div class="X">X</div>`;
     }
   }
 
@@ -80,17 +81,17 @@ export default class GameBoard {
     let full = false;
     //1차 가로줄 판단로직
     if (
-      this.state.squares[lineIndex][0].innerHTML === this.state.turn &&
-      this.state.squares[lineIndex][1].innerHTML === this.state.turn &&
-      this.state.squares[lineIndex][2].innerHTML === this.state.turn
+      this.state.squares[lineIndex][0].innerHTML.className === this.state.turn &&
+      this.state.squares[lineIndex][1].innerHTML.className === this.state.turn &&
+      this.state.squares[lineIndex][2].innerHTML.className === this.state.turn
     ) {
       return true;
     }
     // 2차 세로줄 판단로직
     if (
-      this.state.squares[0][squareIndex].innerHTML === this.state.turn &&
-      this.state.squares[1][squareIndex].innerHTML === this.state.turn &&
-      this.state.squares[2][squareIndex].innerHTML === this.state.turn
+      this.state.squares[0][squareIndex].innerHTML.className === this.state.turn &&
+      this.state.squares[1][squareIndex].innerHTML.className === this.state.turn &&
+      this.state.squares[2][squareIndex].innerHTML.className === this.state.turn
     ) {
       return true;
     }
@@ -100,12 +101,12 @@ export default class GameBoard {
     // x, y값을 뺐을떄 0이 되거나 x, y를 뺏을떄 절대값 2가 되어야한다
     if (lineIndex - squareIndex === 0 || Math.abs(lineIndex - squareIndex) === 2) {
       if (
-        (this.state.squares[0][0].innerHTML === this.state.turn &&
-          this.state.squares[1][1].innerHTML === this.state.turn &&
-          this.state.squares[2][2].innerHTML === this.state.turn) ||
-        (this.state.squares[0][2].innerHTML === this.state.turn &&
-          this.state.squares[1][1].innerHTML === this.state.turn &&
-          this.state.squares[2][0].innerHTML === this.state.turn)
+        (this.state.squares[0][0].innerHTML.className === this.state.turn &&
+          this.state.squares[1][1].innerHTML.className === this.state.turn &&
+          this.state.squares[2][2].innerHTML.className === this.state.turn) ||
+        (this.state.squares[0][2].innerHTML.className === this.state.turn &&
+          this.state.squares[1][1].innerHTML.className === this.state.turn &&
+          this.state.squares[2][0].innerHTML.className === this.state.turn)
       ) {
         return true;
       }
@@ -113,7 +114,7 @@ export default class GameBoard {
 
     for (let i = 0; i < this.state.squares.length; i++) {
       for (let j = 0; j < this.state.squares[i].length; j++) {
-        if (!this.state.squares[i][j].innerHTML) {
+        if (!this.state.squares[i][j].innerHTML.className) {
           return false;
         }
       }
